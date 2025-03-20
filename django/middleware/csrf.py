@@ -355,11 +355,11 @@ class CsrfViewMiddleware(MiddlewareMixin):
         except InvalidTokenFormat as exc:
             raise RejectRequest(f"CSRF cookie {exc.reason}.")
 
-        # if csrf_secret is None:
-        #     # No CSRF cookie. For POST requests, we insist on a CSRF cookie,
-        #     # and in this way we can avoid all CSRF attacks, including login
-        #     # CSRF.
-        #     raise RejectRequest(REASON_NO_CSRF_COOKIE)
+        if csrf_secret is None:
+            # No CSRF cookie. For POST requests, we insist on a CSRF cookie,
+            # and in this way we can avoid all CSRF attacks, including login
+            # CSRF.
+            raise RejectRequest(REASON_NO_CSRF_COOKIE)
 
         # Check non-cookie token for match.
         request_csrf_token = ""
