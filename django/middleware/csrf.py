@@ -367,6 +367,7 @@ class CsrfViewMiddleware(MiddlewareMixin):
             try:
                 request_csrf_token = request.POST.get("csrfmiddlewaretoken", "")
             except UnreadablePostError:
+                raise
                 # Handle a broken connection before we've completed reading the
                 # POST data. process_view shouldn't raise any exceptions, so
                 # we'll ignore and serve the user a 403 (assuming they're still
