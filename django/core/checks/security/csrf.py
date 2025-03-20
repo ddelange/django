@@ -26,13 +26,13 @@ def _csrf_middleware():
     return "django.middleware.csrf.CsrfViewMiddleware" in settings.MIDDLEWARE
 
 
-# @register(Tags.security, deploy=True)
+@register(Tags.security, deploy=True)
 def check_csrf_middleware(app_configs, **kwargs):
     passed_check = _csrf_middleware()
     return [] if passed_check else [W003]
 
 
-# @register(Tags.security, deploy=True)
+@register(Tags.security, deploy=True)
 def check_csrf_cookie_secure(app_configs, **kwargs):
     passed_check = (
         settings.CSRF_USE_SESSIONS
@@ -42,7 +42,7 @@ def check_csrf_cookie_secure(app_configs, **kwargs):
     return [] if passed_check else [W016]
 
 
-# @register(Tags.security)
+@register(Tags.security)
 def check_csrf_failure_view(app_configs, **kwargs):
     from django.middleware.csrf import _get_failure_view
 
